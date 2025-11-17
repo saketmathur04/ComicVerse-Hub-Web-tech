@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ComicVerse Hub - Explore the Multiverse of Comics</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.cdnfonts.com/css/callie-chalk-font"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.cdnfonts.com/css/callie-chalk-font");
+    </style>
+  </head>
+  <body>
+    <div id="cart-msg"></div>
+    
+    <header class="site-header">
+      <div class="header-inner container">
+        <h1 class="logo">ComicVerse Hub</h1>
+        <nav class="nav">
+          <a href="index.html">Home</a>
+          <a href="browse.html">Browse</a>
+          <a href="cart.html">Cart <span class="cart-count">0</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="container">
+        <h2>Explore the Multiverse of Comics</h2>
+        <p>
+          Discover new releases, trending series & your favorite publishers in our immersive digital collection!
+        </p>
+        <a href="browse.html" class="btn hero-btn">Start Exploring</a>
+      </div>
+    </section>
+
+    <!-- POPULAR RELEASES SLIDER -->
+    <section class="photo-gallery">
+      <div class="container">
+        <h2>Popular Releases</h2>
+
+        <div class="slider-wrapper">
+          <div class="image-slider" id="parallax-slider"></div>
+        </div>
+
+        <div class="scrollbar">
+          <div class="scroll-thumb"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW RELEASES SECTION -->
+    <section class="home-section">
+      <div class="container">
+        <h2 class="section-title">New Releases</h2>
+        <div id="new-releases" class="cards-grid"></div>
+      </div>
+    </section>
+
+    <!-- PUBLISHER SPOTLIGHT -->
+    <section class="home-section">
+      <div class="container">
+        <h2 class="section-title">Publisher Spotlight</h2>
+        <div class="publisher-row"></div>
+      </div>
+    </section>
+
+    <!-- POPULAR SERIES SECTION -->
+    <section class="home-section">
+      <div class="container">
+        <h2 class="section-title">Popular Series</h2>
+        <div id="popular-series" class="cards-grid"></div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2024 ComicVerse Hub — A premium comic book experience</p>
+        <p class="muted" style="margin-top: 10px;">All images and content are for demonstration purposes only.</p>
+      </div>
+    </footer>
+
+    <script src="js/comics.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+      // Enhanced slider functionality
+      document.addEventListener("DOMContentLoaded", () => {
+        const slider = document.getElementById("parallax-slider");
+
+        if (!slider || !window.COMICS) return;
+
+        // Use same 9 comics or pick latest 9
+        const sliderComics = [...COMICS].slice(0, 9);
+
+        slider.innerHTML = sliderComics
+          .map(
+            (c) => `
+          <img 
+            src="${c.cover}" 
+            alt="${c.title}" 
+            onclick="openComic(${c.id})"
+            loading="lazy"
+          />
+        `
+          )
+          .join("");
+          
+        // Add parallax effect to slider
+        let mouseX = 0;
+        document.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX / window.innerWidth;
+          const translateX = (mouseX - 0.5) * 20;
+          slider.style.transform = `translateX(calc(-50% + ${translateX}px))`;
+        });
+      });
+
+      // REUSE your existing function
+      function openComic(id) {
+        // Add click animation
+        const img = event.target;
+        img.style.transform = 'scale(0.9)';
+        
+        setTimeout(() => {
+          window.location.href = "comic-detail.html?id=" + id;
+        }, 200);
+      }
+    </script>
+  </body>
+</html>
